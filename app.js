@@ -1,27 +1,43 @@
 const express = require("express");
-const pageRoute = require;
+const mongoose = require("mongoose");
+const pageRoute = require("./routes/pageRoute");
+const courseRoute = require("./routes/courseRoute");
 const app = express();
 const PORT = 4000;
+
+// connect database
+mongoose
+    .connect("mongodb://localhost/smartedu-project", {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        // useCreateIndex: true,
+    })
+    .then(() => {
+        console.log("Database successfully connected.");
+    });
 
 // template engine
 app.set("view engine", "ejs");
 
 // middlewares
 app.use(express.static("public"));
-// app.use(express.urlencoded({ extended: true }));
-// app.use(express.json());
+// for parsing application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
+// read the json files
+app.use(express.json());
+
 // app.use(methodOverride("_method", { methods: ["POST", "GET"] }));
 
 // show request middleware
 app.use(function (req, res, next) {
-    console.log("Request:", req.path);
+    // console.log("Request:", req.path);
     next();
 });
 
-// show all posts on main page - go to main page
-app.get("/", (req, res) => {
-    res.render("index");
-});
+// routes
+app.use("/", pageRoute);
+app.use("/courses", courseRoute);
+
 // show post detail
 // app.get("/posts/:id", postController.getPost);
 // // adding post to the site
