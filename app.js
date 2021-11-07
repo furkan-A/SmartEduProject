@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const pageRoute = require("./routes/pageRoute");
 const courseRoute = require("./routes/courseRoute");
 const categoryRoute = require("./routes/categoryRoute");
+const userRoute = require("./routes/userRoute");
+
 const app = express();
 const PORT = 4000;
 
@@ -39,6 +41,7 @@ app.use(function (req, res, next) {
 app.use("/", pageRoute);
 app.use("/courses", courseRoute);
 app.use("/categories", categoryRoute);
+app.use("/users", userRoute);
 
 // show post detail
 // app.get("/posts/:id", postController.getPost);
