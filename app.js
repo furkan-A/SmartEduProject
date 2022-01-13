@@ -1,12 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const session = require("express-session");
 const pageRoute = require("./routes/pageRoute");
 const courseRoute = require("./routes/courseRoute");
 const categoryRoute = require("./routes/categoryRoute");
 const userRoute = require("./routes/userRoute");
 
 const app = express();
-const PORT = 4000;
+const PORT = 3003;
 
 // connect database
 mongoose
@@ -29,7 +30,13 @@ app.use(express.urlencoded({ extended: true }));
 // read the json files
 app.use(express.json());
 
-// app.use(methodOverride("_method", { methods: ["POST", "GET"] }));
+app.use(session({
+    secret: "my_keyboard_cat",
+    resave: false, 
+    saveUninitialized:true
+}))
+
+
 
 // show request middleware
 app.use(function (req, res, next) {

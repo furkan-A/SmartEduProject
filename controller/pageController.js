@@ -1,4 +1,5 @@
 exports.getIndexPage = function (req, res) {
+    console.log(req.session.userID);
     res.status(200).render("index", {
         page_name: "index",
     });
@@ -13,7 +14,7 @@ exports.getRegisterPage = function (req, res) {
         page_name: "register",
     });
 };
-exports.getLoginPage = function (req, res) {
+exports.getLoginPage = (req, res) => {
     res.status(200).render("login", {
         page_name: "login",
     });
