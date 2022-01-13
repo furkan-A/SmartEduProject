@@ -5,10 +5,11 @@ const bcrypt = require("bcrypt");
 exports.createUser = async (req, res) => {
     const user = await User.create(req.body);
     try {
-        res.status(201).json({
-            status: "success",
-            user,
-        });
+        res.status(200).redirect('/login');
+        // res.status(201).json({
+        //     status: "success",
+        //     user,
+        // });
     } catch (error) {
         res.status(400).json({
             status: "fail",
@@ -24,10 +25,10 @@ exports.loginUser = async (req, res) => {
         const user = await User.findOne({ email });
         if (user) {
             bcrypt.compare(password, user.password, (err, same) => {
-            if (same) {
-                req.session.userID = user._id;
-                res.status(200).redirect('/');
-            }
+                if (same) {
+                    req.session.userID = user._id;
+                    res.status(200).redirect('/');
+                }
             });
         }
     } catch (error) {

@@ -23,19 +23,26 @@ mongoose
 // template engine
 app.set("view engine", "ejs");
 
+// global variable
+global.userIN = null;
+
 // middlewares
 app.use(express.static("public"));
 // for parsing application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 // read the json files
 app.use(express.json());
-
+// session settings
 app.use(session({
     secret: "my_keyboard_cat",
     resave: false, 
     saveUninitialized:true
-}))
-
+}));
+// use global key for if user logged in to the site then behave this situation
+app.use('*', (req, res, next) => {
+    userIN = req.session.userID;
+    next();
+});
 
 
 // show request middleware
