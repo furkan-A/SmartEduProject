@@ -18,7 +18,6 @@ exports.createUser = async (req, res) => {
     }
 };
 
-
 exports.loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -37,4 +36,10 @@ exports.loginUser = async (req, res) => {
             error,
         });
     }
-  };
+};
+
+exports.logOutUser = async (req, res) => {
+    req.session.destroy(() => {
+        res.redirect('/');
+    });
+};
