@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
-const MongoStore = require('connect-mongo');
+const MongoStore = require("connect-mongo");
 const pageRoute = require("./routes/pageRoute");
 const courseRoute = require("./routes/courseRoute");
 const categoryRoute = require("./routes/categoryRoute");
@@ -12,14 +12,14 @@ const PORT = 3003;
 
 // connect database
 mongoose
-    .connect("mongodb://localhost/smartedu-project", {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        // useCreateIndex: true,
-    })
-    .then(() => {
-        console.log("Database successfully connected.");
-    });
+  .connect("mongodb://localhost/smartedu-project", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    // useCreateIndex: true,
+  })
+  .then(() => {
+    console.log("Database successfully connected.");
+  });
 
 // template engine
 app.set("view engine", "ejs");
@@ -34,23 +34,26 @@ app.use(express.urlencoded({ extended: true }));
 // read the json files
 app.use(express.json());
 // session settings
-app.use(session({
+app.use(
+  session({
     secret: "my_keyboard_cat",
-    resave: false, 
-    saveUninitialized:true,
-    store: MongoStore.create({ mongoUrl: 'mongodb://localhost/smartedu-project' })
-}));
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl: "mongodb://localhost/smartedu-project",
+    }),
+  })
+);
 // use global key for if user logged in to the site then behave this situation
-app.use('*', (req, res, next) => {
-    userIN = req.session.userID;
-    next();
+app.use("*", (req, res, next) => {
+  userIN = req.session.userID;
+  next();
 });
-
 
 // show request middleware
 app.use(function (req, res, next) {
-    // console.log("Request:", req.path);
-    next();
+  // console.log("Request:", req.path);
+  next();
 });
 
 // routes
@@ -76,5 +79,5 @@ app.use("/users", userRoute);
 
 // start the server
 app.listen(PORT, () => {
-    console.log(`App started on port ${PORT}`);
+  console.log(`App started on port ${PORT}`);
 });
