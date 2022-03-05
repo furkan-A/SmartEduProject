@@ -14,11 +14,14 @@ const PORT = 3003;
 mongoose
   .connect("mongodb://localhost/smartedu-project", {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+    // useUnifiedTopology: true,
     // useCreateIndex: true,
   })
   .then(() => {
     console.log("Database successfully connected.");
+  }).catch((err)=>{
+    console.log(`Database connection error: ${err}`);
+    
   });
 
 // template engine
@@ -62,20 +65,6 @@ app.use("/courses", courseRoute);
 app.use("/categories", categoryRoute);
 app.use("/users", userRoute);
 
-// show post detail
-// app.get("/posts/:id", postController.getPost);
-// // adding post to the site
-// app.post("/posts", postController.createPost);
-// // update detail of the post
-// app.put("/posts/:id", postController.updatePost);
-// // delete  the post
-// app.delete("/posts/:id", postController.deletePost);
-// // go to about page
-// app.get("/about", pageController.getAboutPage);
-// // go to add post page
-// app.get("/add_post", pageController.getAddPostPage);
-// // go to update detail of the post
-// app.get("/posts/edit/:id", pageController.getEditPage);
 
 // start the server
 app.listen(PORT, () => {
